@@ -1,47 +1,77 @@
 let tasks = [];
 
-let addTask = () => {
-    let taskInput = document.getElementById('taskInput');
-    const text = taskInput.value.trim();
+const addTask = () => {
+  const taskInput = document.getElementById("taskInput");
+  const text = taskInput.value.trim();
 
-    if (text){
-        tasks.push({text:text, completed:false})
-
-        updateTasksList()
-    }    
+  if (text) {
+    tasks.push({ text: text, completed: false });
+    taskInput.value = ""; // Clear the input field
+    updateTasksList();
+    updateStats();
+  }
 };
 
-let updateTasksList = () => {
-    let tasksList = document.getElementById('task-list');
-    tasksList.innerHTML = 'no';
-    tasks.forEach((task, index) => {
-        const listitem = document.createElement('li')
+const updateTasksList = () => {
+  const tasksList = document.getElementById("task-list");
+  tasksList.innerHTML = ""; // Clear existing tasks
 
-        listitem.innerHTML = `
-        <div class='taskItem'>
-            <div class='task ${task.completed? 'completed':""}'>               
-                <input type='checkbox' class='checkbox' ${task.completed? 'checked' : ""}/>
-                <p>${task.text}</p>
-            </div>
-            <div>
-                <i class="fa-regular fa-pen-to-square" onClick="editTask(${index})"></i>
-                <i class="fa-solid fa-trash" onclick="deletTask(${index})"></i>
-            </div>
+  tasks.forEach((task, index) => {
+    const listItem = document.createElement("li");
+
+    listItem.innerHTML = `
+      <div class='taskItem'>
+        <div class='task ${task.completed ? "completed" : ""}'>
+          <input 
+            type='checkbox' 
+            class='checkbox' 
+            ${task.completed ? "checked" : ""}
+            onchange='toggleTaskComplete(${index})' 
+          />
+          <p>${task.text}</p>
         </div>
-        `  //did not understand the specific line inside string interpolations...
+        <div>
+          <i class="fa-regular fa-pen-to-square" onclick="editTask(${index})"></i>
+          <i class="fa-solid fa-trash" onclick="deleteTask(${index})"></i>
+        </div>
+      </div>
+    `;
 
-        console.log(index);
-        
+    tasksList.append(listItem);
+  });
+};
 
-        listitem.addEventListener('change', ()=> toggletaskComplete(index))
+const toggleTaskComplete = (index) => {
+  tasks[index].completed = !tasks[index].completed;
+  updateTasksList();
+  updateStats();
+};
 
-        tasksList.append(listitem);
-    })
-}
+const deleteTask = (index) => {
+  tasks.splice(index, 1); // Remove task at the given index
+  updateTasksList(); // Re-render the task list
+  updateStats(); // Update stats after deletion
+};
 
+const editTask = (index) => {
+  const newTask = prompt("Edit your task:", tasks[index].text);
+  if (newTask !== null && newTask.trim() !== "") {
+    tasks[index].text = newTask.trim();
+    updateTasksList();
+    updateStats();
+  }
+};
 
-document.getElementById("newTask").addEventListener("click", function (e) { 
+const updateStats = () => {
+  const completedTasks = tasks.filter((task) => task.completed).length;
+  const totalTasks = tasks.length;
+  const progress = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+
+  document.getElementById("numbers").textContent = `${completedTasks} / ${totalTasks}`;
+  document.getElementById("progress").style.width = `${progress}%`;
+};
+
+document.getElementById("newTask").addEventListener("click", function (e) {
   e.preventDefault();
-
   addTask();
 });
