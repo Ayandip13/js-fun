@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Todo List</title>
-  <link rel="stylesheet" href="one.css" />
-</head>
-<body>
-  <div class="container">
-    <div class="stats-container">
-      <div class="details">
-        <h1>Todo List</h1>
-        <p>Keep it up!</p>
-        <div id="progressBar">
-          <div id="progress"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List</title>
+    <link rel="stylesheet" href="one.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="stats-container">
+        <div class="details">
+          <h1>Todo List</h1>
+          <p>Keep it up!</p>
+          <div id="progressBar">
+            <div id="progress"></div>
+          </div>
+        </div>
+        <div class="stats-numbers">
+          <p id="numbers">0 / 0</p>
         </div>
       </div>
-      <div class="stats-numbers">
-        <p id="numbers">0 / 0</p>
-      </div>
+      <form>
+        <input type="text" id="taskInput" placeholder="Add your daily action" />
+        <button id="newTask" type="submit">+</button>
+      </form>
+      <ul class="task-list" id="task-list"></ul>
     </div>
-    <form>
-      <input type="text" id="taskInput" placeholder="Add your daily action" />
-      <button id="newTask" type="submit">+</button>
-    </form>
-    <ul class="task-list" id="task-list"></ul>
-  </div>
-  <script src="one.js"></script>
-</body>
+    <script src="one.js"></script>
+  </body>
 </html>
