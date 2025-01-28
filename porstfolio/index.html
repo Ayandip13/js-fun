@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="style.css" /> -->
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background-color: #050035;
+        color: azure;
+      }
+      nav {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        height: 50px;
+        background-color: #080050;
+      }
+      nav ul {
+        display: flex;
+        justify-content: center;
+      }
+      nav ul li {
+        list-style: none;
+        margin: 0 23px;
+      }
+      .left {
+        font-size: 1.5rem;
+      }
+      .firstSection {
+        display: flex;
+        justify-content: space-around;
+        margin: 50px 0;
+        align-items: center;
+      }
+      .firstSection > div {
+        width: 30%;
+      }
+      .leftSection {
+        font-size: 3rem;
+      }
+      .rightSection img {
+        width: 100%;
+      }
+      .purple {
+        color: blueviolet;
+      }
+      a {
+        color: whitesmoke;
+        cursor: pointer;
+        text-decoration: none;
+      }
+      a:hover {
+        color: #ca92ff;
+        font-size: 1.01rem;
+      }
+      #element{
+        color: #ab52ff;
+      }
+      .secondSection{
+        max-width: 80vw;
+        margin: auto;
+      }
+      .secondSection h1{
+        font-size: 1.6rem;
+      }
+      main hr{
+        border: 0;
+        background: #1809a3;
+        height: 1.2px;
+        margin: 40px 84px;
+      }
+      .text-gray{
+        color: gray;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="left">Ayandip's portflio</div>
+        <div class="right">
+          <ul>
+            <li><a href="/">Home </a></li>
+            <li><a href="/">About </a></li>
+            <li><a href="/">Service </a></li>
+            <li><a href="/">Projects </a></li>
+            <li><a href="/">Contact Me</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <section class="firstSection">
+        <div class="leftSection">
+          Hi, Myself <span class="purple">Ayandip</span>
+          <div>I'm an passionate</div>
+          <span id="element"></span>
+        </div>
+        <div class="rightSection">
+          <img src="developer.webp" alt="developer" />
+        </div>
+      </section>
+      <hr>
+      <section class="secondSection">
+        <span class="text-gray">What I've done so far<span>
+        <h1>Work Experiences</h1>
+      </section>
+
+
+    </main>
+
+
+
+
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <script>
+      var typed = new Typed("#element", {
+        strings: ["App Developer.", "Web Developer.", "Devops Engineer"],
+        typeSpeed: 50,
+      });
+    </script>
+  </body>
+</html>
