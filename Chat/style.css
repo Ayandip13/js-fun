@@ -1,5 +1,5 @@
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
   background-color: #1a1a1a;
@@ -7,7 +7,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  color: azure;
+  color: #e0e0e0;
 }
 
 .chat-container {
@@ -15,7 +15,7 @@ body {
   max-width: 400px;
   background-color: #2a2a2a;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(2555, 255, 255, 0.1);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -34,7 +34,7 @@ body {
   font-size: 1.5rem;
 }
 
-.chat-message {
+.chat-messages {
   flex-grow: 1;
   padding: 20px;
   overflow-y: auto;
@@ -102,7 +102,7 @@ body {
 }
 
 #send-button:hover {
-  background-color: #4a90e2;
+  background-color: #3a7bc8;
 }
 
 #send-button:disabled {
@@ -117,6 +117,7 @@ body {
   }
 }
 
+/* Scrollbar Styles */
 ::-webkit-scrollbar {
   width: 8px;
 }

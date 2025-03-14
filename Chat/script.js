@@ -3,25 +3,26 @@ const API_KEY = "AIzaSyBVgwDcPDuDaZPGIE8hGBqNGMlUimu5y_g";
 const API_URL =
   "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent";
 
+const chatMessages = document.getElementById("chat-messages");
+
 const userInput = document.getElementById("user-input");
+
 const sendButton = document.getElementById("send-button");
 
 async function generateResponse(prompt) {
   const response = await fetch(`${API_URL}?key=${API_KEY}`, {
     method: "POST",
-    //specifies the HTTP method(post) to send data to the API (here prompt is sending to the API)
+
     headers: {
       "Content-Type": "application/json",
-      //whenever the response will come it will be in json format
     },
+
     body: JSON.stringify({
-      //the body of the request, converting the user's message into the format required by the API.
       contents: [
         {
           parts: [
             {
               text: prompt,
-              //user's input (`prompt`) is inserted into the request payload
             },
           ],
         },
@@ -31,11 +32,90 @@ async function generateResponse(prompt) {
 
   if (!response.ok) {
     throw new Error("Failed to generate response");
-    //if there's an error, an exception is thrown with an error message
   }
 
   const data = await response.json();
-  //converts the api response into the json fomat
-  return data.candidate[0].content.parts[0].text;
-  //Returns the first generated response from the API (the text part of the response).
+  // Converts the API response to JSON format.
+
+  return data.candidates[0].content.parts[0].text;
 }
+
+function cleanMarkdown(text) {
+  return (
+    text
+      .replace(/#{1,6}\s?/g, "")
+      // Removes any Markdown headers (e.g., #, ##, ###).
+
+      .replace(/\*\*/g, "")
+      // Removes bold formatting (double asterisks **).
+
+      .replace(/\n{3,}/g, "\n\n")
+      // Limits excessive newlines to a maximum of two (replaces more than two newlines with two).
+
+      .trim()
+  );
+  // Removes any whitespace from the start and end of the string.
+}
+
+function addMessage(message, isUser) {
+  const messageElement = document.createElement("div");
+  messageElement.classList.add("message");
+
+  messageElement.classList.add(isUser ? "user-message" : "bot-message");
+
+  const profileImage = document.createElement("img");
+  profileImage.classList.add("profile-image");
+
+  profileImage.src = isUser ? "user.jpg" : "bot.jpg";
+
+  profileImage.alt = isUser ? "User" : "Bot";
+
+  const messageContent = document.createElement("div");
+  messageContent.classList.add("message-content");
+
+  messageContent.textContent = message;
+
+  messageElement.appendChild(profileImage);
+  messageElement.appendChild(messageContent);
+
+  chatMessages.appendChild(messageElement);
+
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+async function handleUserInput() {
+  const userMessage = userInput.value.trim();
+
+  if (userMessage) {
+    addMessage(userMessage, true);
+
+    userInput.value = "";
+
+    sendButton.disabled = true;
+    userInput.disabled = true;
+
+    try {
+      const botMessage = await generateResponse(userMessage);
+
+      addMessage(cleanMarkdown(botMessage), false);
+    } catch (error) {
+      console.error("Error:", error);
+
+      addMessage("Sorry, I encountered an error. Please try again.", false);
+    } finally {
+      sendButton.disabled = false;
+      userInput.disabled = false;
+      userInput.focus();
+    }
+  }
+}
+
+sendButton.addEventListener("click", handleUserInput);
+
+userInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+
+    handleUserInput();
+  }
+});
